@@ -87,18 +87,36 @@ inquirer.prompt([
             body: [],
         }).then(() => {
             console.log(chalk.greenBright("Removed Global Commands"))
+        }).then(SlashCommands => {
+            // console.log(SlashCommands)
         })
 
+        // console.log(bot.guilds)
         console.log(chalk.cyanBright("\nRemoving Guilds Commands"))
-        bot.guilds.cache.forEach(async Guild => {
+        // bot.guilds.cache.forEach(async Guild => {
+        //     // console.log(Guild.name)
+        //     // console.log(Guild.id)
+        //     await rest.put(Routes.applicationGuildCommands(bot.user.id, Guild.id), {
+        //         body: [],
+        //     }).then(SlashCommands => {
+        //         // console.log(SlashCommands)
+        //     })
+        // }
+        // // , () => {
+        // //     console.log(chalk.greenBright("Removed Guilds Commands"))
+        // // }
+        // )
+        // console.log(bot.guilds.cache)
+        for(let Guild of Array.from(bot.guilds.cache)) {
+            Guild = Guild[1]
+            // console.log(Guild.name)
+            // console.log(Guild.id)
             await rest.put(Routes.applicationGuildCommands(bot.user.id, Guild.id), {
                 body: [],
+            }).then(SlashCommands => {
+                // console.log(SlashCommands)
             })
         }
-        // , () => {
-        //     console.log(chalk.greenBright("Removed Guilds Commands"))
-        // }
-        )
         console.log(chalk.greenBright("Removed Guilds Commands"))
 
         console.log(chalk.greenBright("\nAll done !!!\n\n\n"))
